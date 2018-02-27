@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-02-27T15:38:09+09:00</updated><id>http://localhost:4000/</id><title type="html">huit</title><subtitle></subtitle><entry><title type="html">Sequence to Sequence Learning with Neural Networks</title><link href="http://localhost:4000/2018/02/27/Seq2Seq.html" rel="alternate" type="text/html" title="Sequence to Sequence Learning with Neural Networks" /><published>2018-02-27T00:00:00+09:00</published><updated>2018-02-27T00:00:00+09:00</updated><id>http://localhost:4000/2018/02/27/Seq2Seq</id><content type="html" xml:base="http://localhost:4000/2018/02/27/Seq2Seq.html">&lt;h1 id=&quot;sequence-to-sequence-learning-with-neural-networks&quot;&gt;Sequence to Sequence Learning with Neural Networks&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-02-27T15:53:34+09:00</updated><id>http://localhost:4000/</id><title type="html">北大IT勉強会共同ウェブログ</title><subtitle></subtitle><entry><title type="html">Sequence to Sequence Learning with Neural Networks</title><link href="http://localhost:4000/2018/02/27/Seq2Seq.html" rel="alternate" type="text/html" title="Sequence to Sequence Learning with Neural Networks" /><published>2018-02-27T00:00:00+09:00</published><updated>2018-02-27T00:00:00+09:00</updated><id>http://localhost:4000/2018/02/27/Seq2Seq</id><content type="html" xml:base="http://localhost:4000/2018/02/27/Seq2Seq.html">&lt;h1 id=&quot;sequence-to-sequence-learning-with-neural-networks&quot;&gt;Sequence to Sequence Learning with Neural Networks&lt;/h1&gt;
 
 &lt;p&gt;https://arxiv.org/abs/1409.3215&lt;/p&gt;
 
@@ -10,6 +10,8 @@ DNNs にとって困難である、可変的な出力を得ることを可能と
 の LSTM で出力する可変長のベクトル（翻訳語の単語の列）を生成する。&lt;/p&gt;
 
 &lt;h2 id=&quot;2-the-model&quot;&gt;2. The Model&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;https://huitclub.github.io/images/pic.jpg&quot; alt=&quot;Figure1&quot; title=&quot;Logo Title Text 1&quot; /&gt;&lt;/p&gt;
+
 &lt;p&gt;基本的な構造は Figure1 の通りだが、以下の 3 点が違う。&lt;/p&gt;
 
 &lt;ol&gt;
@@ -58,4 +60,36 @@ LSTM formulation
 [10] A. Graves. Generating sequences with recurrent neural networks. In Arxiv preprint arXiv:1308.0850,
 2013.
 Minimal time lag 問題
-[17] S. Hochreiter and J. Schmidhuber. LSTM can solve hard long time lag problems. 1997&lt;/p&gt;</content><author><name></name></author><summary type="html">Sequence to Sequence Learning with Neural Networks</summary></entry></feed>
+[17] S. Hochreiter and J. Schmidhuber. LSTM can solve hard long time lag problems. 1997&lt;/p&gt;</content><author><name></name></author><summary type="html">Sequence to Sequence Learning with Neural Networks</summary></entry><entry><title type="html">17.4.1 일자 아치리눅스 버그 ‘Conflicting files: ca-certificates-utils: /etc/ssl/certs/ca-certificates.crt already exists in filesystem’</title><link href="http://localhost:4000/2017/04/01/archlinux-bug.html" rel="alternate" type="text/html" title="17.4.1 일자 아치리눅스 버그 'Conflicting files: ca-certificates-utils: /etc/ssl/certs/ca-certificates.crt already exists in filesystem'" /><published>2017-04-01T00:00:00+09:00</published><updated>2017-04-01T00:00:00+09:00</updated><id>http://localhost:4000/2017/04/01/archlinux-bug</id><content type="html" xml:base="http://localhost:4000/2017/04/01/archlinux-bug.html">&lt;p&gt;영어 읽을 수 있다면 그냥 여기를 보면 된다.&lt;/p&gt;
+
+&lt;p&gt;https://www.ostechnix.com/fix-conflicting-files-ca-certificates-utils-etcsslcertsca-certificates-crt-already-exists-filesystem-error-arch-linux/&lt;/p&gt;
+
+&lt;p&gt;한글로 보고 싶거나 필요한 것만 보고 싶은 사람들은 여기서 부터 읽으세요.&lt;/p&gt;
+
+&lt;p&gt;현재 아치리눅스 시스템을 업그레이드 하면&lt;/p&gt;
+
+&lt;p&gt;Conflicting files: ca-certificates-utils: /etc/ssl/certs/ca-certificates.crt already exists in filesystem&lt;/p&gt;
+
+&lt;p&gt;라는 말이 뜨면서 업그레이드가 되지 않는다.&lt;/p&gt;
+
+&lt;p&gt;간단한 해결 방법&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;(sudo) pacman -Syuw&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;w옵션은 download only 이다&lt;/p&gt;
+
+&lt;p&gt;의미는 Sync-refresh-sysupgrade-download only&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;(sudo) rm /etc/ssl/certs/ca-certificates.crt&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;지운다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;(sudo) pacman -Su&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;다운 받아놓은 걸로 설치를 한다&lt;/p&gt;</content><author><name></name></author><summary type="html">영어 읽을 수 있다면 그냥 여기를 보면 된다.</summary></entry></feed>

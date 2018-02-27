@@ -1,13 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2018-02-27T14:52:57+09:00</updated><id>/</id><title type="html">huit</title><subtitle></subtitle><entry><title type="html">Welcome to Jekyll!</title><link href="/jekyll/update/2018/02/26/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2018-02-26T19:00:28+09:00</published><updated>2018-02-26T19:00:28+09:00</updated><id>/jekyll/update/2018/02/26/welcome-to-jekyll</id><content type="html" xml:base="/jekyll/update/2018/02/26/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
-
-&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
-
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-02-27T15:06:48+09:00</updated><id>http://localhost:4000/</id><title type="html">huit</title><subtitle></subtitle><entry><title type="html">Sequence to Sequence Learning with Neural Networks</title><link href="http://localhost:4000/2018/02/27/Seq2Seq.html" rel="alternate" type="text/html" title="Sequence to Sequence Learning with Neural Networks" /><published>2018-02-27T00:00:00+09:00</published><updated>2018-02-27T00:00:00+09:00</updated><id>http://localhost:4000/2018/02/27/Seq2Seq</id><content type="html" xml:base="http://localhost:4000/2018/02/27/Seq2Seq.html">&lt;h1 id=&quot;sequence-to-sequence-learning-with-neural-networks&quot;&gt;Sequence to Sequence Learning with Neural Networks&lt;/h1&gt;
+&lt;p&gt;https://arxiv.org/abs/1409.3215&lt;/p&gt;
+&lt;h2 id=&quot;1-introduction&quot;&gt;1. Introduction&lt;/h2&gt;
+&lt;p&gt;Seq2Seq は入力ベクトルを受け取って異なる次元のベクトルを出力する LSTM の構造であり、
+DNNs にとって困難である、可変的な出力を得ることを可能とした。
+翻訳の場合、まず 1 つ目の LSTM で入力ベクトル（各単語）を逆順に受け取り、そこから得られ
+る文章の意味を表現する固定次元のベクトル(the fixed- dimensional representation �)を用いて、2 つ目
+の LSTM で出力する可変長のベクトル（翻訳語の単語の列）を生成する。&lt;/p&gt;
+&lt;h2 id=&quot;2-the-model&quot;&gt;2. The Model&lt;/h2&gt;
+&lt;p&gt;基本的な構造は Figure1 の通りだが、以下の 3 点が違う。&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;前半と後半で 2 つの LSTM を使用する。これにより、計算コストを無視できるほど多くのパラ
+メータも持たせられる。&lt;/li&gt;
+  &lt;li&gt;Deep LSTM の方が Shallow LSTM よりも性能がいいので、4 層の LSTM を使用する。&lt;/li&gt;
+  &lt;li&gt;入力ベクトルを逆順にする。
+    &lt;h2 id=&quot;3-experiments&quot;&gt;3. Experiments&lt;/h2&gt;
+    &lt;h3 id=&quot;31-使用するデータ&quot;&gt;3.1 使用するデータ&lt;/h3&gt;
+    &lt;p&gt;WMT’14 English to French dataset を使用し、16 万単語をソース文章に、8 万単語を翻訳文章に適用
+した。除外された単語は全て”&lt;UNK&gt;”というトークンに置き換えた。&lt;/UNK&gt;&lt;/p&gt;
+    &lt;h3 id=&quot;32-デコード方法&quot;&gt;3.2 デコード方法&lt;/h3&gt;
+    &lt;p&gt;デコードには beam search decoder を用いて、単語の部分仮説の内、確率の高い数個を残して、他
+の可能性を排除するという操作を行った。&lt;/p&gt;
+    &lt;h3 id=&quot;33-入力ベクトルを逆順に&quot;&gt;3.3 入力ベクトルを逆順に&lt;/h3&gt;
+    &lt;p&gt;こうすると精度が向上する厳密な理由はわからないが、minimal time lag 問題を解決し、誤差逆伝
+播にてインプットとアウトプット間の communication の確立を容易にした。&lt;/p&gt;
+    &lt;h3 id=&quot;34-詳細設定&quot;&gt;3.4 詳細設定&lt;/h3&gt;
+    &lt;p&gt;・ 重みの初期値~� −0.08, 0.08
+・ SGD を使用し、最初の 5epoch は� = 0.7でそこから 0.5epoch ごとに半減させ、7.5epochs まで学
+習させた。
+・ 128個のバッチを使用し、勾配を128で割った。
+・ 勾配爆発問題を防ぐために、は勾配を128で割ったものを�とし、� = � 0を計算し、s &amp;gt; 5の
+時、� = 45
+6 とする。&lt;/p&gt;
+    &lt;h3 id=&quot;35-実験結果&quot;&gt;3.5 実験結果&lt;/h3&gt;
+    &lt;p&gt;BLEU スコアにおいて、長文でも高い精度が得られた。&lt;/p&gt;
+    &lt;h2 id=&quot;4-related-work&quot;&gt;4. Related Work&lt;/h2&gt;
+    &lt;h2 id=&quot;5-conclusion&quot;&gt;5. Conclusion&lt;/h2&gt;
+    &lt;p&gt;この実験で、制限された語彙と問題仮定のない Deep LSTM が、語彙制限のない大規模の標準的な
+統計的機械学習モデルを上回ったことを示した。
+実験者が驚いた点は 2 つ。
+・ 入力ベクトルを逆順に入れることで、精度が飛躍的に向上した点。
+・ 長い文章の翻訳も先行研究と違い、逆順にしたことで高い精度が得られた点。
+References
+LSTM formulation
+[10] A. Graves. Generating sequences with recurrent neural networks. In Arxiv preprint arXiv:1308.0850,
+2013.
+Minimal time lag 問題
+[17] S. Hochreiter and J. Schmidhuber. LSTM can solve hard long time lag problems. 1997&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</content><author><name></name></author><summary type="html">Sequence to Sequence Learning with Neural Networks https://arxiv.org/abs/1409.3215 1. Introduction Seq2Seq は入力ベクトルを受け取って異なる次元のベクトルを出力する LSTM の構造であり、 DNNs にとって困難である、可変的な出力を得ることを可能とした。 翻訳の場合、まず 1 つ目の LSTM で入力ベクトル（各単語）を逆順に受け取り、そこから得られ る文章の意味を表現する固定次元のベクトル(the fixed- dimensional representation �)を用いて、2 つ目 の LSTM で出力する可変長のベクトル（翻訳語の単語の列）を生成する。 2. The Model 基本的な構造は Figure1 の通りだが、以下の 3 点が違う。 前半と後半で 2 つの LSTM を使用する。これにより、計算コストを無視できるほど多くのパラ メータも持たせられる。 Deep LSTM の方が Shallow LSTM よりも性能がいいので、4 層の LSTM を使用する。 入力ベクトルを逆順にする。 3. Experiments 3.1 使用するデータ WMT’14 English to French dataset を使用し、16 万単語をソース文章に、8 万単語を翻訳文章に適用 した。除外された単語は全て””というトークンに置き換えた。 3.2 デコード方法 デコードには beam search decoder を用いて、単語の部分仮説の内、確率の高い数個を残して、他 の可能性を排除するという操作を行った。 3.3 入力ベクトルを逆順に こうすると精度が向上する厳密な理由はわからないが、minimal time lag 問題を解決し、誤差逆伝 播にてインプットとアウトプット間の communication の確立を容易にした。 3.4 詳細設定 ・ 重みの初期値~� −0.08, 0.08 ・ SGD を使用し、最初の 5epoch は� = 0.7でそこから 0.5epoch ごとに半減させ、7.5epochs まで学 習させた。 ・ 128個のバッチを使用し、勾配を128で割った。 ・ 勾配爆発問題を防ぐために、は勾配を128で割ったものを�とし、� = � 0を計算し、s &amp;gt; 5の 時、� = 45 6 とする。 3.5 実験結果 BLEU スコアにおいて、長文でも高い精度が得られた。 4. Related Work 5. Conclusion この実験で、制限された語彙と問題仮定のない Deep LSTM が、語彙制限のない大規模の標準的な 統計的機械学習モデルを上回ったことを示した。 実験者が驚いた点は 2 つ。 ・ 入力ベクトルを逆順に入れることで、精度が飛躍的に向上した点。 ・ 長い文章の翻訳も先行研究と違い、逆順にしたことで高い精度が得られた点。 References LSTM formulation [10] A. Graves. Generating sequences with recurrent neural networks. In Arxiv preprint arXiv:1308.0850, 2013. Minimal time lag 問題 [17] S. Hochreiter and J. Schmidhuber. LSTM can solve hard long time lag problems. 1997</summary></entry></feed>

@@ -24,9 +24,7 @@ github_username:  HUITCLUB
 
 # Build settings
 markdown: kramdown
-# theme: jekyll-theme-cayman
 plugins:
-  # - jekyll-sitemap
   - jekyll-feed
 
 # Exclude from processing.

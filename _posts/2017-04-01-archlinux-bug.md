@@ -23,6 +23,17 @@ Conflicting files: ca-certificates-utils: /etc/ssl/certs/ca-certificates.crt alr
 
 간단한 해결 방법
 
+{% highlight ruby linenos %}
+def show
+  puts "Outputting a very lo-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-ong lo-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-ong line"
+  @widget = Widget(params[:id])
+  respond_to do |format|
+    format.html # show.html.erb
+    format.json { render json: @widget }
+  end
+end
+{% endhighlight %}
+
 1. (sudo) pacman -Syuw
 
 w옵션은 download only 이다
@@ -32,10 +43,7 @@ w옵션은 download only 이다
 
 
 2. (sudo) rm /etc/ssl/certs/ca-certificates.crt
-
 지운다.
-
-
 
 3. (sudo) pacman -Su
 

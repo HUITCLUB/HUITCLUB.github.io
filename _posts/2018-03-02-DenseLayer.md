@@ -3,8 +3,6 @@ layout: post
 title:  "Dense Layer / Fully Connected Layer（全結合層）"
 ---
 
-https://arxiv.org/abs/1409.3215
-
 ## Model Structure
 ![Figure1](https://huitclub.github.io/images/dense.jpg "")
 　前の層の出力を受け取り、重みとバイアスの計算処理を行い、次の層（活性化関数の層）へ伝播させる。

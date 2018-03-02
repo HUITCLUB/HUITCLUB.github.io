@@ -58,6 +58,6 @@ $$
 
 ## Tensorflow
 
-{% highlight python lineos %}
+{% highlight python linenos %}
 dense = tf.layers.dense(    inputs=z,              # z.shape = (column(i))    units=J,               # 隠れ層の unit 数(j)の指定    activation=tf.nn.relu  # activation function の指定)# -> shape = (column(j))
 {% endhighlight %}

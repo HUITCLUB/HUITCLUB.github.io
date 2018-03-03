@@ -177,7 +177,7 @@ $$
 
 
 ## Backward
-**input:** $$ \boldsymbol{\delta}^{(l)} = \left( \delta^{(l)}_j \right) $$
+**input:** $$ \boldsymbol{y} = \left( y_k \right), \boldsymbol{t} = \left( t_k \right) $$
 
 **formula:**
 

@@ -4,7 +4,7 @@ title:  "Softmax With Cross Entropy Layer"
 ---
 
 ## Model Structure
-![Figure1](https://huitclub.github.io/images/softmax.jpg "")
+![Figure1](https://huitclub.github.io/images/softmax.jpg "softmax")
 
 　Softmax関数は多クラス分類問題に使用される。最終層の出力を受け取り、各クラス$$C_k$$について入力$$\boldsymbol{x}$$が与えられた下での条件付き確率$$y_k = P\left(C_k \mid  \boldsymbol{x} \right)$$を計算する。<br>
 　誤差関数には交差エントロピー誤差(cross entropy error)を用いる。交差エントロピーではone-hot表現で与えられる教師データ$$\boldsymbol{t} = (t_k)$$を用いて、誤差を計算する。

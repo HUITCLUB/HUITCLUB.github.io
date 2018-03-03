@@ -4,7 +4,7 @@ title:  "Dense Layer / Fully Connected Layer（全結合層）"
 ---
 
 ## Model Structure
-![Figure1](https://huitclub.github.io/images/dense.jpg "")
+![Figure1](https://huitclub.github.io/images/dense.jpg "dense")
 　前の層の出力を受け取り、重みとバイアスの計算処理を行い、次の層（活性化関数の層）へ伝播させる。
 
 

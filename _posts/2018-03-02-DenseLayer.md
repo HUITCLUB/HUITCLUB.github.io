@@ -21,9 +21,9 @@ bias: $$ \boldsymbol{b}^{(l)} = \left( b^{(l)}_j \right) $$
 
 $$
 \begin{align*}
-\boldsymbol{u}^{(l)} = \boldsymbol{W}^{(l)} \boldsymbol{z}^{(l-1)} + \boldsymbol{u}^{(b)} 
+\boldsymbol{u}^{(l)} = \boldsymbol{W}^{(l)} \boldsymbol{z}^{(l-1)} + \boldsymbol{b}^{(l)} 
 \\
-u^{(l)}_j = \sum_{i} w_{ji} z_{i} + b_{j}
+u^{(l)}_j = \sum_{i} w_{ji}^{(l)} z_{i}^{(l-1)} + b_{j}^{(l)}
 \end{align*}
 $$
 
@@ -37,20 +37,16 @@ $$
 **formula:**
 
 $$
-\begin{align*}
+\begin{array}{c}
 \nabla_{\boldsymbol{W}^{(l)}} E = \boldsymbol{\delta}^{(l)} \left( \boldsymbol{z}^{(l-1)} \right)^{\top}
 \\
 \dfrac{\partial E}{\partial w^{(l)}_{ji}}= \dfrac{\partial E}{\partial u^{(l)}_{j}} \dfrac{\partial u^{(l)}_{j}}{\partial w^{(l)}_{ji}} = \delta^{(l)}_j z^{(l-1)}_i
-\end{align*}
-$$
-
-$$
-\begin{align*}
+\\
 \nabla_{\boldsymbol{z}^{(l-1)}} E =  \left( \boldsymbol{W}^{(l)} \right)^{\top}
 \boldsymbol{\delta}^{(l)}
 \\
 \dfrac{\partial E}{\partial z^{(l-1)}_{i}} = \sum_{k} \dfrac{\partial E}{\partial u^{(l)}_{k}}\dfrac{\partial u^{(l)}_{k}}{\partial z^{(l-1)}_{i}} = \sum_{k} \delta^{(l)}_j w^{(l-1)}_k
-\end{align*}
+\end{array}
 $$
 
 

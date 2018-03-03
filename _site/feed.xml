@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-03-02T15:14:02+09:00</updated><id>http://localhost:4000/</id><title type="html">北大IT</title><subtitle></subtitle><entry><title type="html">Sequence to Sequence Learning with Neural Networks</title><link href="http://localhost:4000/2018/02/27/Seq2Seq.html" rel="alternate" type="text/html" title="Sequence to Sequence Learning with Neural Networks" /><published>2018-02-27T00:00:00+09:00</published><updated>2018-02-27T00:00:00+09:00</updated><id>http://localhost:4000/2018/02/27/Seq2Seq</id><content type="html" xml:base="http://localhost:4000/2018/02/27/Seq2Seq.html">&lt;p&gt;https://arxiv.org/abs/1409.3215&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-03-03T17:36:26+09:00</updated><id>http://localhost:4000/</id><title type="html">北大IT</title><subtitle></subtitle><entry><title type="html">Sequence to Sequence Learning with Neural Networks</title><link href="http://localhost:4000/2018/02/27/Seq2Seq.html" rel="alternate" type="text/html" title="Sequence to Sequence Learning with Neural Networks" /><published>2018-02-27T00:00:00+09:00</published><updated>2018-02-27T00:00:00+09:00</updated><id>http://localhost:4000/2018/02/27/Seq2Seq</id><content type="html" xml:base="http://localhost:4000/2018/02/27/Seq2Seq.html">&lt;p&gt;https://arxiv.org/abs/1409.3215&lt;/p&gt;
 
 &lt;h2 id=&quot;1-introduction&quot;&gt;1. Introduction&lt;/h2&gt;
 &lt;p&gt;Seq2Seq は入力ベクトルを受け取って異なる次元のベクトルを出力する LSTM の構造であり、
 DNNs にとって困難である、可変的な出力を得ることを可能とした。
 翻訳の場合、まず 1 つ目の LSTM で入力ベクトル（各単語）を逆順に受け取り、そこから得られ
-る文章の意味を表現する固定次元のベクトル(the fixed- dimensional representation �)を用いて、2 つ目
+る文章の意味を表現する固定次元のベクトル(the fixed- dimensional representation &lt;script type=&quot;math/tex&quot;&gt;\bf{v}&lt;/script&gt; )を用いて、2 つ目
 の LSTM で出力する可変長のベクトル（翻訳語の単語の列）を生成する。&lt;/p&gt;
 
 &lt;h2 id=&quot;2-the-model&quot;&gt;2. The Model&lt;/h2&gt;
@@ -34,13 +34,13 @@ DNNs にとって困難である、可変的な出力を得ることを可能と
 播にてインプットとアウトプット間の communication の確立を容易にした。&lt;/p&gt;
 
 &lt;h3 id=&quot;34-詳細設定&quot;&gt;3.4 詳細設定&lt;/h3&gt;
-&lt;p&gt;・ 重みの初期値~� −0.08, 0.08
-・ SGD を使用し、最初の 5epoch は = 0.7でそこから 0.5epoch ごとに半減させ、7.5epochs まで学
-習させた。
-・ 128個のバッチを使用し、勾配を128で割った。
-・ 勾配爆発問題を防ぐために、は勾配を128で割ったものを�とし、� = � 0を計算し、s &amp;gt; 5の
-時、� = 45
-6 とする。&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;重みの初期値&lt;script type=&quot;math/tex&quot;&gt;\sim \mathcal{U} (−0.08, 0.08)&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;SGD を使用し、最初の 5epoch は &lt;script type=&quot;math/tex&quot;&gt;\mu=0.7&lt;/script&gt;でそこから 0.5epoch ごとに半減させ、7.5epochs まで学
+習させた。&lt;/li&gt;
+  &lt;li&gt;128個のバッチを使用し、勾配を128で割った。&lt;/li&gt;
+  &lt;li&gt;勾配爆発問題を防ぐために、は勾配を128で割ったものを&lt;script type=&quot;math/tex&quot;&gt;g&lt;/script&gt;とし、&lt;script type=&quot;math/tex&quot;&gt;s = \left\| g\right\| ^2&lt;/script&gt;を計算し、&lt;script type=&quot;math/tex&quot;&gt;s &gt; 5&lt;/script&gt;の時、 &lt;script type=&quot;math/tex&quot;&gt;g = \dfrac{s}{5g}&lt;/script&gt;とする。&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
 \begin{align*}
@@ -68,12 +68,14 @@ DNNs にとって困難である、可変的な出力を得ることを可能と
 統計的機械学習モデルを上回ったことを示した。
 実験者が驚いた点は 2 つ。
 ・ 入力ベクトルを逆順に入れることで、精度が飛躍的に向上した点。
-・ 長い文章の翻訳も先行研究と違い、逆順にしたことで高い精度が得られた点。
-References
-LSTM formulation
+・ 長い文章の翻訳も先行研究と違い、逆順にしたことで高い精度が得られた点。&lt;/p&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
+&lt;p&gt;LSTM formulation
 [10] A. Graves. Generating sequences with recurrent neural networks. In Arxiv preprint arXiv:1308.0850,
-2013.
-Minimal time lag 問題
+2013.&lt;/p&gt;
+
+&lt;p&gt;Minimal time lag 問題
 [17] S. Hochreiter and J. Schmidhuber. LSTM can solve hard long time lag problems. 1997&lt;/p&gt;</content><author><name></name></author><summary type="html">https://arxiv.org/abs/1409.3215</summary></entry><entry><title type="html">17.4.1 일자 아치리눅스 버그 ‘Conflicting files: ca-certificates-utils: /etc/ssl/certs/ca-certificates.crt already exists in filesystem’</title><link href="http://localhost:4000/2017/04/01/archlinux-bug.html" rel="alternate" type="text/html" title="17.4.1 일자 아치리눅스 버그 'Conflicting files: ca-certificates-utils: /etc/ssl/certs/ca-certificates.crt already exists in filesystem'" /><published>2017-04-01T00:00:00+09:00</published><updated>2017-04-01T00:00:00+09:00</updated><id>http://localhost:4000/2017/04/01/archlinux-bug</id><content type="html" xml:base="http://localhost:4000/2017/04/01/archlinux-bug.html">&lt;p&gt;영어 읽을 수 있다면 그냥 여기를 보면 된다.&lt;/p&gt;
 
 &lt;p&gt;https://www.ostechnix.com/fix-conflicting-files-ca-certificates-utils-etcsslcertsca-certificates-crt-already-exists-filesystem-error-arch-linux/&lt;/p&gt;

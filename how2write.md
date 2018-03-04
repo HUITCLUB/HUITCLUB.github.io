@@ -55,7 +55,7 @@ $$\LaTeX$$の書き方はググるのだー<br>
 バッククオート(Macならshift+@)で囲うより、
 
 ```
-{% highlight language lineos %}
+{% highlight language linenos %}
 def hello():
 	print("Hello")
 {% endhighlight %}

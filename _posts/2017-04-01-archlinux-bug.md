@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "17.4.1 일자 아치리눅스 버그 'Conflicting files: ca-certificates-utils: /etc/ssl/certs/ca-certificates.crt already exists in filesystem'"
+date: 2017-04-01
 ---
 
 영어 읽을 수 있다면 그냥 여기를 보면 된다.

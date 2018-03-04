@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Dense Layer / Fully Connected Layer（全結合層）"
+date: 2018-03-02
 ---
 
 ## Model Structure
@@ -22,7 +23,7 @@ bias: $$ \boldsymbol{b}^{(l)} = \left( b^{(l)}_j \right) $$
 
 $$
 \begin{align*}
-\boldsymbol{u}^{(l)} = \boldsymbol{W}^{(l)} \boldsymbol{z}^{(l-1)} + \boldsymbol{b}^{(l)} 
+\boldsymbol{u}^{(l)} = \boldsymbol{W}^{(l)} \boldsymbol{z}^{(l-1)} + \boldsymbol{b}^{(l)}
 \\
 u^{(l)}_j = \sum_{i} w_{ji}^{(l)} z_{i}^{(l-1)} + b_{j}^{(l)}
 \end{align*}

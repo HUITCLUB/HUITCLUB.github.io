@@ -5,15 +5,15 @@
   </head>
   <body style="margin:0;padding:0;">
     {% for post in site.posts %}
-      <article class="post" style="margin-left:30px">
+      <article style="margin-left:30px">
 
         <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
 
-        <div class="entry">
+        <div style="width: 30%;">
           {{ post.excerpt }}
         </div>
 
-        <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+        <a href="{{ post.url }}">Read More</a>
       </article>
     {% endfor %}
     {{ content }}

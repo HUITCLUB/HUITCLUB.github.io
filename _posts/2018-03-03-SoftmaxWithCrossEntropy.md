@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Softmax With Cross Entropy Layer"
+date: 2018-03-03
 ---
 
 ## Model Structure
@@ -14,7 +15,7 @@ title:  "Softmax With Cross Entropy Layer"
 
 $$
 \begin{equation}
-P\left(y \mid  \boldsymbol{x} \right) = 
+P\left(y \mid  \boldsymbol{x} \right) =
 \prod_{k=1}^{K} \left( P \left(C_k \mid  \boldsymbol{x} \right) \right)^{t_k}
 = \prod_{k=1}^{K-1} \left( P \left(C_k \mid  \boldsymbol{x} \right) \right)^{t_k} \left( P \left(C_K \mid  \boldsymbol{x} \right) \right)^{1 - \sum_{k=1}^{K-1} t_k} = P \left(C_K \mid  \boldsymbol{x} \right) e^{\sum_{k=1}^{K} t_k u_k} \tag{1}
 \end{equation}
@@ -120,7 +121,7 @@ $$
 を利用して、予測の確率分布$$Q(x)$$から真の確率分布$$P(x)$$への距離（分布の近さ）をKL情報量(Kullback-Leibler divergence)：
 
 $$
-D_{KL}(P \mid\mid Q) = \sum_{x \sim P (\rm{x})} P(x) \left( \log P(x) - \log Q(x) \right) 
+D_{KL}(P \mid\mid Q) = \sum_{x \sim P (\rm{x})} P(x) \left( \log P(x) - \log Q(x) \right)
 $$
 
 で計算することができる。

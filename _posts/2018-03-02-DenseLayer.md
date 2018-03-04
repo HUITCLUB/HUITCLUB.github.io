@@ -5,7 +5,7 @@ date: 2018-03-02
 ---
 
 ## Model Structure
-![Figure1](https://huitclub.github.io/images/dense.jpg "dense")
+<img src="https://huitclub.github.io/images/dense.jpg" alt="Figure1" title="dense" height="300">
 
 　前の層の出力を受け取り、重みとバイアスの計算処理を行い、次の層（活性化関数の層）へ伝播させる。
 

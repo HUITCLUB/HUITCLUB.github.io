@@ -167,7 +167,7 @@ $$
 1. 対称性 $$ \Pi_X^{\top} = \Pi_X$$
 2. 冪等性 $$ \Pi_X^2 = \Pi_X $$
 
-　よって、$$\Pi_X$$は射影子であり、$$\mathbb{R}^m$$空間上の点から、$$\mathbb{R}^m$$上の$$\boldsymbol{y}=\boldsymbol{X \theta}$$び貼る空間への正射影となっており、BLUEであることが直感的に捉えられる。
+　よって、$$\Pi_X$$は射影子であり、$$\mathbb{R}^m$$空間上の点から、$$\mathbb{R}^m$$上の$$\boldsymbol{y}=\boldsymbol{X \theta}$$の張る空間への正射影となっており、BLUEであることが直感的に捉えられる。
 
 ### Neural Networkへの導入
 　まず、線形モデル：

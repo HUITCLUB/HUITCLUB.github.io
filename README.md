@@ -18,8 +18,10 @@ mdファイルの上の"---"で囲まれた部分はYAML Front Matterと言っ�
 
 - layout: _layoutフォルダ内にあるファイルを指定(例：post)
 - title: titleをダブルクオーテーションで囲んで記述(例："アランが生まれました✌️")
-- category: カテゴリを記載(例："document")
-- tags: リスト表記でタグを記載(例：["birth", "yeah"])
+- category: カテゴリを記載(例：event)
+	- カテゴリはevent, workと各活動内容に合わせた名前のみ使用可能
+- tags: リスト表記でタグを記載(例：[Birth, Yeah])
+	- タグは自由（つけすぎは良くない）
 - date: 編集日を例にならって記載(例：1912-06-23)
 - author: ユーザ名を記載(例：Ethel Sara Turing)
 

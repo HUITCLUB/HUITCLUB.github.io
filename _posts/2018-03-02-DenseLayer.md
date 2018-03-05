@@ -2,7 +2,8 @@
 layout: post
 title:  "Dense Layer / Fully Connected Layer（全結合層）"
 date: 2018-03-02
-category: "deeplearning"
+categories: [explanation]
+tags: [DNN]
 ---
 
 ## Model Structure

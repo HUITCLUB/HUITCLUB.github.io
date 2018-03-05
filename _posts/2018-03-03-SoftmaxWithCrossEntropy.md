@@ -2,6 +2,8 @@
 layout: post
 title:  "Softmax With Cross Entropy Layer"
 date: 2018-03-03
+categories: [explanation]
+tags: [DNN, LossFunction]
 ---
 
 ## Model Structure

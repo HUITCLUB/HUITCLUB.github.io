@@ -1,4 +1,238 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-03-04T14:31:52+09:00</updated><id>http://localhost:4000/</id><title type="html">北大IT</title><subtitle></subtitle><entry><title type="html">Softmax With Cross Entropy Layer</title><link href="http://localhost:4000/2018/03/03/SoftmaxWithCrossEntropy.html" rel="alternate" type="text/html" title="Softmax With Cross Entropy Layer" /><published>2018-03-03T00:00:00+09:00</published><updated>2018-03-03T00:00:00+09:00</updated><id>http://localhost:4000/2018/03/03/SoftmaxWithCrossEntropy</id><content type="html" xml:base="http://localhost:4000/2018/03/03/SoftmaxWithCrossEntropy.html">&lt;h2 id=&quot;model-structure&quot;&gt;Model Structure&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-03-06T14:46:05+09:00</updated><id>http://localhost:4000/</id><title type="html">北大IT</title><subtitle></subtitle><entry><title type="html">Mean Squared Error （二乗和誤差）</title><link href="http://localhost:4000/2018/03/04/MeanSquaredError.html" rel="alternate" type="text/html" title="Mean Squared Error （二乗和誤差）" /><published>2018-03-04T00:00:00+09:00</published><updated>2018-03-04T00:00:00+09:00</updated><id>http://localhost:4000/2018/03/04/MeanSquaredError</id><content type="html" xml:base="http://localhost:4000/2018/03/04/MeanSquaredError.html">&lt;h2 id=&quot;model-structure&quot;&gt;Model Structure&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;https://huitclub.github.io/images/mse.jpg&quot; alt=&quot;Figure1&quot; title=&quot;MSE&quot; height=&quot;300&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;　二乗和誤差は回帰問題に使用される誤差関数。ニューラルネットワークの出力&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y}&lt;/script&gt;を受け取り、教師データ&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{t}&lt;/script&gt;を利用して誤差を計算する。&lt;/p&gt;
+
+&lt;h2 id=&quot;why-use-mse&quot;&gt;Why use MSE?&lt;/h2&gt;
+&lt;p&gt;　二乗和誤差は、統計学における最小二乗法に基づいて与えられている。&lt;/p&gt;
+
+&lt;h3 id=&quot;線形モデル&quot;&gt;線形モデル&lt;/h3&gt;
+&lt;p&gt;　まず、線形モデル：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\boldsymbol{y} = \boldsymbol{X \theta} + \boldsymbol{\varepsilon}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;y_i = \sum_j x_{ij} \theta_j + \varepsilon_i&lt;/script&gt;
+
+&lt;p&gt;を考える。ここで、各変数は&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y} =\left(y_{i}\right)&lt;/script&gt;: &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt;番目の入力&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{x}_i&lt;/script&gt;に基づく、誤差&lt;script type=&quot;math/tex&quot;&gt;\varepsilon_{i}&lt;/script&gt;込みの実測値&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{X} =\left(x_{ij}\right)&lt;/script&gt;: &lt;script type=&quot;math/tex&quot;&gt;j&lt;/script&gt;番目のパラメータ&lt;script type=&quot;math/tex&quot;&gt;\theta_{j}&lt;/script&gt;に対応する&lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt;番目の入力値&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\theta} =\left( \theta_{j}\right)&lt;/script&gt;: 線形モデルのパラメータ&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\varepsilon} = \left( \varepsilon_{i}\right)&lt;/script&gt;: &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt;番目の誤差 &lt;script type=&quot;math/tex&quot;&gt;\sim \mathcal{N} \left( 0, \sigma^2 \right)&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;であり、誤差の確率分布から&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y} \sim \mathcal{N} \left( \boldsymbol{X \theta}, \sigma^2 \right)&lt;/script&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;最良推定不偏推定量best-linear-unbiased-estimator-blue&quot;&gt;最良推定不偏推定量(Best Linear Unbiased Estimator; BLUE)&lt;/h3&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y}&lt;/script&gt;についてのBLUEを&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y}_{\rm{BLUE}}&lt;/script&gt;と書く。&lt;/p&gt;
+
+&lt;p&gt;性質&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;E\left(\boldsymbol{y}_{\rm{BLUE}}\right) = \sum_j x_{ij} \theta_j&lt;/script&gt; すなわち、誤差項のない真の値&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;V\left(\boldsymbol{y}_{\rm{BLUE}}\right) = \min  V\left(\boldsymbol{y}\right)&lt;/script&gt; 分散を最小にする&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;Cov\left(\boldsymbol{y}_{\rm{BLUE}}\right) = 0&lt;/script&gt; 独立&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;例：無作為抽出&lt;script type=&quot;math/tex&quot;&gt;X_1,\dots,X_n \sim \mathcal{N}\left(\mu, \sigma^2\right)&lt;/script&gt;及び実数&lt;script type=&quot;math/tex&quot;&gt;c_1,\dots,c_n&lt;/script&gt;に対し、推定量&lt;script type=&quot;math/tex&quot;&gt;T = c_1 X_1 + \dots + c_n X_n&lt;/script&gt;を定義する。
+&lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt;がBLUEになる時、&lt;script type=&quot;math/tex&quot;&gt;c_1 = \dots = c_n = \frac{1}{n}&lt;/script&gt;であり、&lt;script type=&quot;math/tex&quot;&gt;T = \frac{1}{n} \sum_i X_i = \bar{X}&lt;/script&gt;である。&lt;/p&gt;
+
+&lt;h3 id=&quot;最小二乗法の原理&quot;&gt;最小二乗法の原理&lt;/h3&gt;
+&lt;p&gt;　一般の線形モデル&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y} = \boldsymbol{X \theta}&lt;/script&gt;において、未知母数&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\theta}&lt;/script&gt;のある係数&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{l}&lt;/script&gt;（&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{l}&lt;/script&gt;は&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{X}&lt;/script&gt;の各行ベクトルに対応）による線形結合：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\boldsymbol{l}^{\top}\boldsymbol{\theta} = \sum_j l_j \theta_j&lt;/script&gt;
+
+&lt;p&gt;についてのBLUEを考える。逐次&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{l}&lt;/script&gt;に対応するBLUEを求めるのは煩雑であるため、二乗和誤差：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;S \left( \boldsymbol{\theta} \right) = \left\| \boldsymbol{y}-\boldsymbol{X\theta} \right\|^{2}= \left( \boldsymbol{y}-\boldsymbol{X\theta} \right)^{\top} \left( \boldsymbol{y}-\boldsymbol{X\theta} \right)&lt;/script&gt;
+
+&lt;p&gt;を最小にする&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\theta} = \widehat{\boldsymbol{\theta}}&lt;/script&gt;を求めて&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{l}^{\top} \widehat{\boldsymbol{\theta}}&lt;/script&gt;をBLUEとすることが、最小二乗法の原理である。&lt;/p&gt;
+
+&lt;p&gt;　これは、二乗和であることから、&lt;script type=&quot;math/tex&quot;&gt;\nabla_{\boldsymbol{\theta}} \left. S  \left( \boldsymbol{\theta} \right) \right|_\widehat{\boldsymbol{\theta}} = \boldsymbol{o} \Leftrightarrow \boldsymbol{\theta} = \arg \min_{\boldsymbol{\theta}} S\left( \boldsymbol{\theta} \right)&lt;/script&gt;であるが、後述のガウス・マルコフの定理により、&lt;script type=&quot;math/tex&quot;&gt;\nabla_{\boldsymbol{\theta}} \left. S  \left( \boldsymbol{\theta} \right) \right|_\widehat{\boldsymbol{\theta}} = \boldsymbol{o}&lt;/script&gt;となる&lt;script type=&quot;math/tex&quot;&gt;\widehat{\boldsymbol{\theta}}&lt;/script&gt;がBLUEになることが保証されている。よって、二乗和である&lt;script type=&quot;math/tex&quot;&gt;S  \left( \boldsymbol{\theta} \right)&lt;/script&gt;を最小化することでBLUEを求められるのである。
+　&lt;/p&gt;
+&lt;h3 id=&quot;正規方程式&quot;&gt;正規方程式&lt;/h3&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\nabla_{\boldsymbol{\theta}} \left. S  \left( \boldsymbol{\theta} \right) \right|_\widehat{\boldsymbol{\theta}} = \boldsymbol{o}&lt;/script&gt;となるとき、&lt;script type=&quot;math/tex&quot;&gt;S  \left( \boldsymbol{\theta} \right)&lt;/script&gt;の形から、&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\dfrac{\partial S}{\partial \theta_j} = -2 \sum_i x_{ij} \left( y_i - \sum_{j'} x_{ij'} \theta_{j'} \right) = 0&lt;/script&gt;
+
+&lt;p&gt;となるので、&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum_i x_{ij} \left(\sum_{j'} x_{ij'} \theta_{j'} \right) = \sum_i x_{ij} y_i&lt;/script&gt;
+
+&lt;p&gt;これを行列形式にすると、&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\boldsymbol{X}^{\top} \boldsymbol{X \theta}=\boldsymbol{X}^{\top} \boldsymbol{y}&lt;/script&gt;
+
+&lt;p&gt;となり、これを正規方程式という。これを&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\theta}&lt;/script&gt;について解けば、&lt;script type=&quot;math/tex&quot;&gt;\widehat{\boldsymbol{\theta}}&lt;/script&gt;を求められる。&lt;/p&gt;
+
+&lt;h3 id=&quot;ガウスマルコフの定理&quot;&gt;ガウス・マルコフの定理&lt;/h3&gt;
+&lt;p&gt;　線形モデルに関する任意の推定可能関数&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{l}^{\top}\boldsymbol{\theta}&lt;/script&gt;について、正規方程式&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{X}^{\top} \boldsymbol{X \theta}=\boldsymbol{X}^{\top} \boldsymbol{y}&lt;/script&gt;を満たす最小二乗解&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\theta}=\widehat{\boldsymbol{\theta}}&lt;/script&gt;から得られる&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{l}^{\top}\widehat{\boldsymbol{\theta}}&lt;/script&gt;が一意にBLUEを与える。&lt;/p&gt;
+
+&lt;h4 id=&quot;簡易的な証明&quot;&gt;簡易的な証明&lt;/h4&gt;
+&lt;p&gt;ここでは&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{X}&lt;/script&gt;がフルランク(&lt;script type=&quot;math/tex&quot;&gt;\rm{rank} \left( \boldsymbol{X} \right) = \dim \boldsymbol{\theta}&lt;/script&gt;)の時のみ証明する。また、フルランク時以外でも&lt;a href=&quot;https://ja.wikipedia.org/?curid=427079&quot;&gt;擬似逆行列&lt;/a&gt;を用いることで、証明できる。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;証明&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;（線形不偏推定量の証明）&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\boldsymbol{X}^{\top} \boldsymbol{X}\widehat{\boldsymbol{\theta}}=\boldsymbol{X}^{\top} \boldsymbol{y}
+\Leftrightarrow \widehat{\boldsymbol{\theta}}=\left( \boldsymbol{X}^{\top} \boldsymbol{X} \right)^{-1}\boldsymbol{X}^{\top} \boldsymbol{y} \tag{1}&lt;/script&gt;
+
+&lt;p&gt;より、&lt;script type=&quot;math/tex&quot;&gt;\forall \boldsymbol{l}^{\top}\boldsymbol{\theta}&lt;/script&gt;に対し、&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\boldsymbol{l}^{\top} \widehat{\boldsymbol{\theta}} =\boldsymbol{l}^{\top} \left( \boldsymbol{X}^{\top} \boldsymbol{X} \right)^{-1}\boldsymbol{X}^{\top} \boldsymbol{y}&lt;/script&gt;
+
+&lt;p&gt;また、期待値：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;E \left( \boldsymbol{l}^{\top}\widehat{\boldsymbol{\theta}} \right) = 
+\boldsymbol{l}^{\top} \left( \boldsymbol{X}^{\top} \boldsymbol{X} \right)^{-1}\boldsymbol{X}^{\top}  E\left( \boldsymbol{y} \right) = \boldsymbol{l}^{\top} \left( \boldsymbol{X}^{\top} \boldsymbol{X} \right)^{-1}\boldsymbol{X}^{\top} \boldsymbol{X \theta} = \boldsymbol{l}^{\top} \boldsymbol{\theta}&lt;/script&gt;
+
+&lt;p&gt;より、&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{l}^{\top}\widehat{\boldsymbol{\theta}}&lt;/script&gt;は&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{l}^{\top} \boldsymbol{\theta}&lt;/script&gt;の線形不偏推定量である。&lt;/p&gt;
+
+&lt;p&gt;（線形不偏推定量の証明終）&lt;/p&gt;
+
+&lt;p&gt;（最良であることの証明）&lt;/p&gt;
+
+&lt;p&gt;　次に、任意の線形不偏推定量&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{L}^{\top} \boldsymbol{y}&lt;/script&gt;を考え、差：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\boldsymbol{l}^{\top}\widehat{\boldsymbol{\theta}} - \boldsymbol{L}^{\top} \boldsymbol{y} = \left\{ \boldsymbol{l}^{\top} \left( \boldsymbol{X}^{\top} \boldsymbol{X} \right)^{-1} \boldsymbol{X}^{\top} - \boldsymbol{L}^{\top} \right\} \boldsymbol{y} \equiv \boldsymbol{b}^{\top} \boldsymbol{y}&lt;/script&gt;
+
+&lt;p&gt;を取ると、&lt;script type=&quot;math/tex&quot;&gt;\forall \boldsymbol{\theta}&lt;/script&gt;に対し、&lt;script type=&quot;math/tex&quot;&gt;E \left( \boldsymbol{L}^{\top} \boldsymbol{y} \right) = \boldsymbol{l}^{\top} \boldsymbol{\theta}&lt;/script&gt;より、&lt;script type=&quot;math/tex&quot;&gt;E \left( \boldsymbol{b}^{\top} \boldsymbol{y} \right) = \boldsymbol{b}^{\top} \boldsymbol{X \theta} \equiv 0&lt;/script&gt;が成り立つので、&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\boldsymbol{b}^{\top} \boldsymbol{X} \equiv \boldsymbol{o} \tag{2}&lt;/script&gt;
+
+&lt;p&gt;ここで、&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{L}^{\top} \boldsymbol{y}&lt;/script&gt;の分散：
+&lt;script type=&quot;math/tex&quot;&gt;V \left( \boldsymbol{L}^{\top} \boldsymbol{y} \right) = V \left( \boldsymbol{l}^{\top} \widehat{\boldsymbol{\theta}} - \boldsymbol{b}^{\top} \boldsymbol{y} \right) = V \left( \boldsymbol{l}^{\top} \widehat{\boldsymbol{\theta}} \right) - 2Cov \left( \boldsymbol{l}^{\top} \left( \boldsymbol{X}^{\top} \boldsymbol{X} \right)^{-1}\boldsymbol{X}^{\top} \boldsymbol{y}, \boldsymbol{b}^{\top} \boldsymbol{y} \right) + V \left( \boldsymbol{b}^{\top} \boldsymbol{y} \right) \tag{3}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;ここで、&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y}&lt;/script&gt;の誤差が&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\varepsilon} \sim \mathcal{N} \left( 0, \sigma^2 \right)&lt;/script&gt;の下で&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{p}^{\top} \boldsymbol{y} = \sum_i p_i y_i, \boldsymbol{q}^{\top} \boldsymbol{y} = \sum_i q_i y_i&lt;/script&gt;とした時、共分散は&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;Cov \left( \boldsymbol{p}^{\top} \boldsymbol{y}, \boldsymbol{q}^{\top} \boldsymbol{y} \right) = Cov \left( \boldsymbol{p}^{\top} \boldsymbol{\varepsilon}, \boldsymbol{q}^{\top} \boldsymbol{\varepsilon} \right) = \sum_i p_i q_i \sigma^2 = \boldsymbol{p}^{\top} \boldsymbol{q} \sigma^2&lt;/script&gt;
+
+&lt;p&gt;となるから式(2)を用いると、式(3)の第2項：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;Cov \left( \boldsymbol{l}^{\top} \left( \boldsymbol{X}^{\top} \boldsymbol{X} \right)^{-1}\boldsymbol{X}^{\top} \boldsymbol{y}, \boldsymbol{b}^{\top} \boldsymbol{y} \right) = \boldsymbol{l}^{\top} \left( \boldsymbol{X}^{\top} \boldsymbol{X} \right)^{-1}\boldsymbol{X}^{\top} \boldsymbol{b} \sigma^2 = 0&lt;/script&gt;
+
+&lt;p&gt;よって、式(3)から、&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;V \left( \boldsymbol{L}^{\top} \boldsymbol{y} \right) = V \left( \boldsymbol{l}^{\top} \widehat{\boldsymbol{\theta}} \right) + V \left( \boldsymbol{b}^{\top} \boldsymbol{y} \right) \Rightarrow V \left( \boldsymbol{L}^{\top} \boldsymbol{y} \right) \geq V \left( \boldsymbol{l}^{\top} \widehat{\boldsymbol{\theta}} \right)&lt;/script&gt;
+
+&lt;p&gt;となるので、&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{l}^{\top} \widehat{\boldsymbol{\theta}}&lt;/script&gt;はBLUEである。&lt;/p&gt;
+
+&lt;p&gt;（最良であることの証明終）&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;証明終&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;幾何学的な意味&quot;&gt;幾何学的な意味&lt;/h4&gt;
+&lt;p&gt;　式(1)から、
+&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{X} \widehat{\boldsymbol{\theta}}=\boldsymbol{X} \left( \boldsymbol{X}^{\top} \boldsymbol{X} \right)^{-1}\boldsymbol{X}^{\top} \boldsymbol{y}&lt;/script&gt;を考える。すると、&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Pi_X = \boldsymbol{X} \left( \boldsymbol{X}^{\top} \boldsymbol{X} \right)^{-1}\boldsymbol{X}^{\top}&lt;/script&gt;
+
+&lt;p&gt;は、以下の性質を満たす。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;対称性 &lt;script type=&quot;math/tex&quot;&gt;\Pi_X^{\top} = \Pi_X&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;冪等性 &lt;script type=&quot;math/tex&quot;&gt;\Pi_X^2 = \Pi_X&lt;/script&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;　よって、&lt;script type=&quot;math/tex&quot;&gt;\Pi_X&lt;/script&gt;は射影子であり、&lt;script type=&quot;math/tex&quot;&gt;\mathbb{R}^m&lt;/script&gt;空間上の点から、&lt;script type=&quot;math/tex&quot;&gt;\mathbb{R}^m&lt;/script&gt;上の&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y}=\boldsymbol{X \theta}&lt;/script&gt;の張る空間への正射影となっており、BLUEであることが直感的に捉えられる。&lt;/p&gt;
+
+&lt;h3 id=&quot;neural-networkへの導入&quot;&gt;Neural Networkへの導入&lt;/h3&gt;
+&lt;p&gt;　まず、線形モデル：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\boldsymbol{y} = \boldsymbol{X \theta} + \boldsymbol{\varepsilon}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;y_i = \sum_j x_{ij} \theta_j + \varepsilon_i&lt;/script&gt;
+
+&lt;p&gt;と、基本的なNueral Networkの変数の対応は以下のようになる。&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;上記の変数&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;上記での説明&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;NNの変数&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;NNでの説明&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;実測値&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{t}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;テストデータ&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{X}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;入力値&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{x}_i&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;バイアスを考慮した&lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt;番目の入力データ&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\theta}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;パラメータ&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{w}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;全層での重み及びバイアスを一つにしたパラメータ&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{X} \widehat{\boldsymbol{\theta}}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;BLUE&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y}&lt;/script&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;NNによる予測値&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;　最下行に記したように、Neural Networkによる予測値&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y}&lt;/script&gt;をBLUEに一致させることが理想である。よって、二乗和誤差：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation}
+E \left( \boldsymbol{w} \right) = \sum_n \sum_k \left(t_{nk} - y_{k}\left( \boldsymbol{x}_n ; \boldsymbol{w}\right) \right)^2
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;を最小化させれば良い。&lt;/p&gt;
+
+&lt;p&gt;　これをオンライン学習に対応させ、微分を簡単にしたものが、Neural Networkでの二乗和誤差：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation}
+E \left( \boldsymbol{w} \right) = \dfrac{1}{2} \sum_k \left(t_{k} - y_{k}\left( \boldsymbol{x} ; \boldsymbol{w}\right) \right)^2
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;である。&lt;/p&gt;
+
+&lt;h2 id=&quot;forward&quot;&gt;Forward&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;input:&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y} = \left( y_k \right), \boldsymbol{t} = \left( t_k \right)&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;formula:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation}
+E  = \dfrac{1}{2} \sum_k \left(t_{k} - y_{k}\left( \boldsymbol{x} ; \boldsymbol{w}\right) \right)^2
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;&lt;strong&gt;output:&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;E&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;backward&quot;&gt;Backward&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;input:&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{y} = \left( y_k \right), \boldsymbol{t} = \left( t_k \right)&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;formula:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\dfrac{\partial E}{\partial y_k} =  y_k - t_k&lt;/script&gt;
+
+&lt;p&gt;&lt;strong&gt;output:&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\nabla_{\boldsymbol{y}} E = \left( \dfrac{\partial E}{\partial y_k} \right)&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;tensorflow&quot;&gt;Tensorflow&lt;/h2&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tensorflow&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# lossの計算&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reduce_mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;square&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# lossをOptimizer(例：勾配降下法)を指定して最小化&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;train_step&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GradientDescentOptimizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;µ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minimize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Model Structure</summary></entry><entry><title type="html">Softmax With Cross Entropy Layer</title><link href="http://localhost:4000/explanation/2018/03/03/SoftmaxWithCrossEntropy.html" rel="alternate" type="text/html" title="Softmax With Cross Entropy Layer" /><published>2018-03-03T00:00:00+09:00</published><updated>2018-03-03T00:00:00+09:00</updated><id>http://localhost:4000/explanation/2018/03/03/SoftmaxWithCrossEntropy</id><content type="html" xml:base="http://localhost:4000/explanation/2018/03/03/SoftmaxWithCrossEntropy.html">&lt;h2 id=&quot;model-structure&quot;&gt;Model Structure&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&quot;https://huitclub.github.io/images/softmax.jpg&quot; alt=&quot;Figure1&quot; title=&quot;softmax&quot; height=&quot;300&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;　Softmax関数は多クラス分類問題に使用される。最終層の出力を受け取り、各クラス&lt;script type=&quot;math/tex&quot;&gt;C_k&lt;/script&gt;について入力&lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{x}&lt;/script&gt;が与えられた下での条件付き確率&lt;script type=&quot;math/tex&quot;&gt;y_k = P\left(C_k \mid  \boldsymbol{x} \right)&lt;/script&gt;を計算する。&lt;br /&gt;
@@ -157,7 +391,7 @@ P \left(C_K \mid  \boldsymbol{x} \right) e^{\sum_{k=1}^{K} t_k u_k} = P \left(C_
 
 &lt;span class=&quot;c&quot;&gt;# cross entropy errorの実装&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;losses&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sparse_softmax_cross_entropy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logits&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Model Structure</summary></entry><entry><title type="html">Dense Layer / Fully Connected Layer（全結合層）</title><link href="http://localhost:4000/2018/03/02/DenseLayer.html" rel="alternate" type="text/html" title="Dense Layer / Fully Connected Layer（全結合層）" /><published>2018-03-02T00:00:00+09:00</published><updated>2018-03-02T00:00:00+09:00</updated><id>http://localhost:4000/2018/03/02/DenseLayer</id><content type="html" xml:base="http://localhost:4000/2018/03/02/DenseLayer.html">&lt;h2 id=&quot;model-structure&quot;&gt;Model Structure&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="[&quot;explanation&quot;]" /><category term="DNN" /><category term="LossFunction" /><summary type="html">Model Structure</summary></entry><entry><title type="html">Dense Layer / Fully Connected Layer（全結合層）</title><link href="http://localhost:4000/explanation/2018/03/02/DenseLayer.html" rel="alternate" type="text/html" title="Dense Layer / Fully Connected Layer（全結合層）" /><published>2018-03-02T00:00:00+09:00</published><updated>2018-03-02T00:00:00+09:00</updated><id>http://localhost:4000/explanation/2018/03/02/DenseLayer</id><content type="html" xml:base="http://localhost:4000/explanation/2018/03/02/DenseLayer.html">&lt;h2 id=&quot;model-structure&quot;&gt;Model Structure&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&quot;https://huitclub.github.io/images/dense.jpg&quot; alt=&quot;Figure1&quot; title=&quot;dense&quot; height=&quot;300&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;　前の層の出力を受け取り、重みとバイアスの計算処理を行い、次の層（活性化関数の層）へ伝播させる。&lt;/p&gt;
@@ -209,7 +443,7 @@ u^{(l)}_j = \sum_{i} w_{ji}^{(l)} z_{i}^{(l-1)} + b_{j}^{(l)}
     &lt;span class=&quot;n&quot;&gt;activation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relu&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# activation function の指定&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# -&amp;gt; shape = (column(j))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">Model Structure</summary></entry><entry><title type="html">Sequence to Sequence Learning with Neural Networks</title><link href="http://localhost:4000/2018/02/27/Seq2Seq.html" rel="alternate" type="text/html" title="Sequence to Sequence Learning with Neural Networks" /><published>2018-02-27T00:00:00+09:00</published><updated>2018-02-27T00:00:00+09:00</updated><id>http://localhost:4000/2018/02/27/Seq2Seq</id><content type="html" xml:base="http://localhost:4000/2018/02/27/Seq2Seq.html">&lt;p&gt;https://arxiv.org/abs/1409.3215&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="[&quot;explanation&quot;]" /><category term="DNN" /><summary type="html">Model Structure</summary></entry><entry><title type="html">Sequence to Sequence Learning with Neural Networks</title><link href="http://localhost:4000/papers/2018/02/27/Seq2Seq.html" rel="alternate" type="text/html" title="Sequence to Sequence Learning with Neural Networks" /><published>2018-02-27T00:00:00+09:00</published><updated>2018-02-27T00:00:00+09:00</updated><id>http://localhost:4000/papers/2018/02/27/Seq2Seq</id><content type="html" xml:base="http://localhost:4000/papers/2018/02/27/Seq2Seq.html">&lt;p&gt;https://arxiv.org/abs/1409.3215&lt;/p&gt;
 
 &lt;h2 id=&quot;1-introduction&quot;&gt;1. Introduction&lt;/h2&gt;
 &lt;p&gt;Seq2Seq は入力ベクトルを受け取って異なる次元のベクトルを出力する LSTM の構造であり、
@@ -277,9 +511,12 @@ DNNs にとって困難である、可変的な出力を得ることを可能と
 &lt;h2 id=&quot;5-conclusion&quot;&gt;5. Conclusion&lt;/h2&gt;
 &lt;p&gt;この実験で、制限された語彙と問題仮定のない Deep LSTM が、語彙制限のない大規模の標準的な
 統計的機械学習モデルを上回ったことを示した。
-実験者が驚いた点は 2 つ。
-・ 入力ベクトルを逆順に入れることで、精度が飛躍的に向上した点。
-・ 長い文章の翻訳も先行研究と違い、逆順にしたことで高い精度が得られた点。&lt;/p&gt;
+実験者が驚いた点は 2 つ。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;入力ベクトルを逆順に入れることで、精度が飛躍的に向上した点。&lt;/li&gt;
+  &lt;li&gt;長い文章の翻訳も先行研究と違い、逆順にしたことで高い精度が得られた点。&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
 &lt;p&gt;LSTM formulation
@@ -287,53 +524,4 @@ DNNs にとって困難である、可変的な出力を得ることを可能と
 2013.&lt;/p&gt;
 
 &lt;p&gt;Minimal time lag 問題
-[17] S. Hochreiter and J. Schmidhuber. LSTM can solve hard long time lag problems. 1997&lt;/p&gt;</content><author><name></name></author><summary type="html">https://arxiv.org/abs/1409.3215</summary></entry><entry><title type="html">17.4.1 일자 아치리눅스 버그 ‘Conflicting files: ca-certificates-utils: /etc/ssl/certs/ca-certificates.crt already exists in filesystem’</title><link href="http://localhost:4000/2017/04/01/archlinux-bug.html" rel="alternate" type="text/html" title="17.4.1 일자 아치리눅스 버그 'Conflicting files: ca-certificates-utils: /etc/ssl/certs/ca-certificates.crt already exists in filesystem'" /><published>2017-04-01T00:00:00+09:00</published><updated>2017-04-01T00:00:00+09:00</updated><id>http://localhost:4000/2017/04/01/archlinux-bug</id><content type="html" xml:base="http://localhost:4000/2017/04/01/archlinux-bug.html">&lt;p&gt;영어 읽을 수 있다면 그냥 여기를 보면 된다.&lt;/p&gt;
-
-&lt;p&gt;https://www.ostechnix.com/fix-conflicting-files-ca-certificates-utils-etcsslcertsca-certificates-crt-already-exists-filesystem-error-arch-linux/&lt;/p&gt;
-
-&lt;p&gt;한글로 보고 싶거나 필요한 것만 보고 싶은 사람들은 여기서 부터 읽으세요.&lt;/p&gt;
-
-&lt;p&gt;현재 아치리눅스 시스템을 업그레이드 하면&lt;/p&gt;
-
-&lt;p&gt;Conflicting files: ca-certificates-utils: /etc/ssl/certs/ca-certificates.crt already exists in filesystem&lt;/p&gt;
-
-&lt;p&gt;라는 말이 뜨면서 업그레이드가 되지 않는다.&lt;/p&gt;
-
-&lt;p&gt;간단한 해결 방법&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;show&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Outputting a very lo-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-ong lo-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-ong line&quot;&lt;/span&gt;
-  &lt;span class=&quot;vi&quot;&gt;@widget&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Widget&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;respond_to&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;html&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# show.html.erb&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;json&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;json: &lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@widget&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;(sudo) pacman -Syuw&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;w옵션은 download only 이다&lt;/p&gt;
-
-&lt;p&gt;의미는 Sync-refresh-sysupgrade-download only&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;(sudo) rm /etc/ssl/certs/ca-certificates.crt
-지운다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;(sudo) pacman -Su&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;다운 받아놓은 걸로 설치를 한다&lt;/p&gt;</content><author><name></name></author><summary type="html">영어 읽을 수 있다면 그냥 여기를 보면 된다.</summary></entry></feed>
+[17] S. Hochreiter and J. Schmidhuber. LSTM can solve hard long time lag problems. 1997&lt;/p&gt;</content><author><name></name></author><category term="[&quot;papers&quot;]" /><category term="RNN" /><category term="LSTM" /><category term="Seq2Seq" /><summary type="html">https://arxiv.org/abs/1409.3215</summary></entry></feed>

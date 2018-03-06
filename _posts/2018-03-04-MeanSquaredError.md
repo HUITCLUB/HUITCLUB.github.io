@@ -35,7 +35,7 @@ $$
 であり、誤差の確率分布から$$\boldsymbol{y} \sim \mathcal{N} \left( \boldsymbol{X \theta}, \sigma^2 \right)$$
 
 
-### 最良推定不偏推定量(Best Linear Unbiased Estimator; BLUE)
+### 最良線形不偏推定量(Best Linear Unbiased Estimator; BLUE)
 
 $$\boldsymbol{y}$$についてのBLUEを$$\boldsymbol{y}_{\rm{BLUE}}$$と書く。
 

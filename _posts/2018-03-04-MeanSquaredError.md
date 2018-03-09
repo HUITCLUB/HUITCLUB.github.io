@@ -199,12 +199,12 @@ $$
 
 を最小化させれば良い。
 
-　これをオンライン学習に対応させ、微分を簡単にしたものが、Neural Networkでの二乗和誤差：
+　$$\frac{1}{2}$$をかけて微分を簡単にしたものが、Neural Networkでの二乗和誤差：
 
 
 $$
 \begin{equation}
-E \left( \boldsymbol{w} \right) = \dfrac{1}{2} \sum_k \left(t_{k} - y_{k}\left( \boldsymbol{x} ; \boldsymbol{w}\right) \right)^2
+E \left( \boldsymbol{w} \right) = \dfrac{1}{2} \sum_n \sum_k \left(t_{nk} - y_{k}\left( \boldsymbol{x}_n ; \boldsymbol{w}\right) \right)^2
 \end{equation}
 $$
 
